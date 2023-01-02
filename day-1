@@ -1,0 +1,28 @@
+# Day 1: Development machine setup 
+
+**Date**: January 1, 2023
+
+## Goals
+
+* Reformat and reconfigure my primary development machine
+    * Gives a fresh start to the challenge and for the new year
+* Update [dev-bootstrap](https://github.com/jwbennet/dev-bootstrap) to handle a few things I've been using on my dev machine since I last updated it:
+    * Setup the Windows OpenSSH agent, add my homelab SSH key to it, and share it with WSL
+    * Use the Git Credential Manager in WSL
+    * Update Git in WSL to a newer version.
+        * Ubuntu still has a fairly old version in the default repository which has some security vulnerabilities.
+* Start a blog(?)
+
+## Findings/Results
+
+* After reformatting my machine and re-installing Windows I hit a couple of snags with installing my software with my [dev-bootstrap](https://github.com/jwbennet/dev-bootstrap) process:
+    * Maven updated to a new version (3.8.7) and the version I was attempting to download was no longer available through the CDN. I switched this to use the Maven archive URL for installation instead. After testing I went ahead and updated to the new version.
+    * WSL2 on Windows 10 was taking a very long time to initialize and run. I found I needed to add resources to the machine through the [.wslconfig](https://learn.microsoft.com/en-us/windows/wsl/wsl-config#configuration-setting-for-wslconfig) on my machine so I templated it so I could configure those in with [chezmoi](https://www.chezmoi.io/user-guide/manage-machine-to-machine-differences/).
+        * :warning: The settings I support in chezmoi should be documented in my dotfiles README at some point
+* I updated Git to a more recent release in WSL and found that I needed a [templating solution for managing the safe Git directories](https://github.com/jwbennet/dotfiles/commit/73d1db3fcf002e1b5960e8b61466e5fb461f2e82) since those variations were making the file difficult to manage in chezmoi.
+* I added support for using the [Windows Git Credential Manager](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-git#git-credential-manager-setup) when I'm working in WSL. This allows me to not have to setup my Git credentials more than when I first log into the GitHub Desktop app the first time.
+* A while back I followed [Stuart Leeks' guide](https://stuartleeks.com/posts/wsl-ssh-key-forward-to-windows/) on using the Windows OpenSSH Agent to manage SSH keys and share them with WSL. This was very convenient because it allows me to have a strong password on my SSH keys, but provides a friendly developer experience since I do not need to enter those credentials every time I restart my machine. I added support for this into my [dotfiles](https://github.com/jwbennet/dotfiles/commit/d0ad1a456b72a4a7539f1cff01cd3df5c8c6792d) and [dev-bootstrap](https://github.com/jwbennet/dev-bootstrap/commit/c8b3c8abe19f00cb8ab60d72d11f9b056ff7bd99) process so I can set this up more quickly in the future.
+    * I lost a lot of time while working on this due to hitting an issue I couldn't figure out with the Windows OpenSSH. I could tell the pipe existed and I was connecting to it in WSL, but I would still be prompted for my password for the SSH key. This was remedied by updating OpenSSH on Windows to a newer version.
+* I added the ability to install apps through the Microsoft Store in [dev-bootstrap](https://github.com/jwbennet/dev-bootstrap/commit/ab7cf87cf6c8aca6d26ac0f3c16a0bd62a2082d9) because I have been liking the Trello app.
+* Yesterday I learned about the [#100DaysOfHomeLab challenge](https://100daysofhomelab.com/) and since it was the start of the new year today I decided to try to take it on. To support that endeavor I decided to start chronicling my journey in this blog for now. I intend to write this in Markdown as I go and for now I'm hoping to push it to a simple GitHub pages site.
+    * :warning: Depending on how well GitHub Pages turns out I might look into deploying a CMS like WordPress or write my own blog shell using Next.js. It would give me a good excuse to tinker with Next.JS.
