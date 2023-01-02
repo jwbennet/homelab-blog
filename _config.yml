@@ -22,9 +22,9 @@ title: Inpulse Technologies Blog
 email: james@inpulsetech.io
 description: >- # this means to ignore newlines until "baseurl:"
   Collection of thoughts as I undertake the #100DaysOfHomeLab challenge.
-domain: jwbennet.github.io
+domain: blog.inpulsetech.io
 baseurl: "/homelab-blog/"
-url: "https://jwbennet.github.io"
+url: "https://blog.inpulsetech.io"
 github_username:  jwbennet
 
 # Build settings
